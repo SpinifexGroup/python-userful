@@ -117,10 +117,19 @@ class UserfulClient:
         False
         :slideshowInterval: Really dont know what this does... defaults to 10
         '''
+        valid_display_types = ['zones', 'mirrorgroups']
+        if display_type not in valid_display_types:
+            raise ValueError(
+                'Invalid display_type {0}, must be one of {1}'.format(
+                    display_type, valid_display_types
+                )
+            )
+
         kwargs['videolist'] = video_list
         res = requests.put(
-            '{0}/{1}/byname/{2}/playVideoList'.format(self.api_url, display_type,
-                                                      display_name),
+            '{0}/{1}/byname/{2}/playVideoList'.format(
+                self.api_url, display_type, display_name
+            ),
             json=kwargs,
             cookies=self.cookie
         )
@@ -142,10 +151,25 @@ class UserfulClient:
         False
         :slideshowInterval: Really dont know what this does... defaults to 10
         '''
+        valid_display_types = ['display', 'zones', 'mirrorgroups']
+        if display_type not in valid_display_types:
+            raise ValueError(
+                'Invalid display_type {0}, must be one of {1}'.format(
+                    display_type, valid_display_types
+                )
+            )
+        valid_display_types = ['zones', 'mirrorgroups']
+        if display_type not in valid_display_types:
+            raise ValueError(
+                'Invalid display_type {0}, must be one of {1}'.format(
+                    display_type, valid_display_types
+                )
+            )
         kwargs['videolist'] = video_list
         res = requests.put(
-            '{0}/{1}/{2}/playVideoList'.format(self.api_url, display_type,
-                                               display_id),
+            '{0}/{1}/{2}/playVideoList'.format(
+                self.api_url, display_type, display_id
+            ),
             json=kwargs,
             cookies=self.cookie
         )
