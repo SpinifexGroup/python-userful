@@ -143,9 +143,9 @@ class UserfulClient:
         :slideshowInterval: Really dont know what this does... defaults to 10
         '''
         kwargs['videolist'] = video_list
-        id = ("JSESSIONID={}".format(display_id)) # Userful requires this format
         res = requests.put(
-            '{0}/{1}/{2}/playVideoList'.format(self.api_url, display_type, id),
+            '{0}/{1}/{2}/playVideoList'.format(self.api_url, display_type,
+                                               display_id),
             json=kwargs,
             cookies=self.cookie
         )
