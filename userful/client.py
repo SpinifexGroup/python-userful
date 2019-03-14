@@ -101,13 +101,16 @@ class UserfulClient:
             cookies=self.cookie
         )
 
-    def play_videolist_by_zone(
-        self, video_list, zone, **kwargs
+    def play_videolist_by_name(
+        self, video_list, display_type, display_name, **kwargs
     ):
         '''
         :param video_list: `list` of `str` where each string is a full path
         to a file on the userful host machine
-        :param zone: String of zone name
+        :param display_type: String of display types. Can be "zones",
+        or "mirrorgroups".
+        :param display_name: String of the name of the associated display
+        to play the video list. EG "control display"
         :param queue: `bool` - If True, playlist will not begin until current
         media playback completes. Defaults to False
         :param repeat: `bool` - Whether to repeat the playlist, defaults to
@@ -116,7 +119,33 @@ class UserfulClient:
         '''
         kwargs['videolist'] = video_list
         res = requests.put(
-            '{0}/zones/byname/{1}/playVideoList'.format(self.api_url, zone),
+            '{0}/{1}/byname/{2}/playVideoList'.format(self.api_url, display_type,
+                                                      display_name),
+            json=kwargs,
+            cookies=self.cookie
+        )
+        return res
+
+    def play_videolist_by_id(
+        self, video_list, display_type, display_id, **kwargs
+    ):
+        '''
+        :param video_list: `list` of `str` where each string is a full path
+        to a file on the userful host machine
+        :param display_type: String of display types. Can be "display", "zones",
+        or "mirrorgroups".
+        :param display_id: String of the id of the display, mirrorgroup, or zone
+        to play the video list. EG "control display"
+        :param queue: `bool` - If True, playlist will not begin until current
+        media playback completes. Defaults to False
+        :param repeat: `bool` - Whether to repeat the playlist, defaults to
+        False
+        :slideshowInterval: Really dont know what this does... defaults to 10
+        '''
+        kwargs['videolist'] = video_list
+        id = ("JSESSIONID={}".format(display_id)) # Userful requires this format
+        res = requests.put(
+            '{0}/{1}/{2}/playVideoList'.format(self.api_url, display_type, id),
             json=kwargs,
             cookies=self.cookie
         )
