@@ -43,17 +43,62 @@ class UserfulClient:
         res.raise_for_status()
         self.cookie = {'JSESSIONID': res.json()['session']['value']}
 
-    def get_sources(self, sourceName=None):
+    def get_sources(self, name=None):
         '''
-        Retrieve a list of sources. If `sourceName` is provided, only the
+        Retrieve a list of sources. If `name` is provided, only the
         source with that name will be returned
         '''
         params = {}
-        if sourceName is not None:
-            params = {'sourceName': sourceName}
+        if name is not None:
+            params = {'sourceName': name}
 
         return requests.get(
-            '{0}/sources'.format(self.api_url), params=params
+            '{0}/sources'.format(self.api_url), params=params,
+            cookies=self.cookie
+        )
+
+    def create_source(self, name, source_type, params):
+        '''
+        Creates a new source.
+
+        :param name: `str` of new source name
+        :param source_type: Type of source, such as "Signage Player"
+        :param params: `dict` of params required to create source. Please
+        consult the official docs on this, as there are too many to document
+        here. http://dev.userful.com/rest/#sources_post
+
+        The ID of the new source can be found in the result JSON in the
+        'sourceId' key at the top level.
+        '''
+        payload = {
+            'sourceName': name,
+            'sourceType': source_type,
+        }
+        payload['params'] = params
+
+        return requests.post(
+            '{0}/sources'.format(self.api_url),
+            json=payload,
+            cookies=self.cookie
+        )
+
+    def update_source(self, source_id, payload):
+        '''
+        Update an existing source.
+
+        :param source_id: `str` of source of ID to update
+        :param payload: `dict` of full payload. Because this call is not
+        idempotent, you are expected to have already used `get_sources` to
+        get the details of your source, replacing the properties that you
+        wish to.
+
+        The ID of the new source can be found in the result JSON in the
+        'sourceId' key at the top level.
+        '''
+        return requests.put(
+            '{0}/sources/{1}'.format(self.api_url, source_id),
+            json=payload,
+            cookies=self.cookie
         )
 
     def play_videolist_by_zone(
