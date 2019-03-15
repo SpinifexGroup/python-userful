@@ -5,7 +5,7 @@ except ImportError:
     from distutils.core import setup
 
 install_reqs = [
-    'requests>=2.21.0',
+    'requests',
 ]
 
 test_requirements = [
@@ -20,6 +20,7 @@ setup(
         version='0.0.1',
         description='Unofficial python client for userful API',
         long_description=readme,
+        long_description_content_type='text/markdown',
         author='Spinifex Group',
         author_email='justin.crown@spinifexgroup.com',
         url='https://github.com/SpinifexGroup/python-userful',
@@ -31,7 +32,7 @@ setup(
         install_requires=install_reqs,
         license='MIT',
         zip_safe=False,
-        keywords='har',
+        keywords='userful',
         classifiers=[
             'Development Status :: 2 - Pre-Alpha',
             'Intended Audience :: Developers',

@@ -1,7 +1,8 @@
 # python-userful
 
-Unofficial Python Client For Userful API. Note that this client is not feature complete, calls will be
-added as they are required.
+Unofficial Python Client For [the Userful REST API](http://dev.userful.com/rest/#).
+
+Note that this client is not feature complete, calls will be added as they are required.
 
 # Usage
 
