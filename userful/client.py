@@ -151,7 +151,7 @@ class UserfulClient:
         False
         :slideshowInterval: Really dont know what this does... defaults to 10
         '''
-        valid_display_types = ['display', 'zones', 'mirrorgroups']
+        valid_display_types = ['displays', 'zones', 'mirrorgroups']
         if display_type not in valid_display_types:
             raise ValueError(
                 'Invalid display_type {0}, must be one of {1}'.format(
