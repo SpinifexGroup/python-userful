@@ -17,7 +17,7 @@ with open('README.md') as f:
 
 setup(
         name='userful',
-        version='0.0.3',
+        version='0.1.0',
         description='Unofficial python client for userful API',
         long_description=readme,
         long_description_content_type='text/markdown',
